@@ -1,0 +1,372 @@
+:root {
+  --bg: #f3f6fb;
+  --panel: #ffffff;
+  --line: #cfdaef;
+  --text-main: #1d2c4a;
+  --text-sub: #4b5f84;
+  --accent: #ff8f46;
+  --deep-blue: #2e58ac;
+  --soft-blue: #dce7fb;
+  --shadow: 0 18px 40px rgba(33, 68, 136, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 15% 10%, #ffffff 0%, var(--bg) 45%, #eaf0fb 100%);
+  color: var(--text-main);
+  font-family: "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.app-shell {
+  width: min(1700px, 96vw);
+  margin: 24px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid #e3ebfa;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(4px);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 18px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--text-sub);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 6px 0 0;
+  font-size: clamp(24px, 1.8vw, 34px);
+}
+
+.mode-toggle {
+  display: flex;
+  background: #eef3ff;
+  border-radius: 999px;
+  padding: 5px;
+  border: 1px solid #d6e2ff;
+}
+
+.mode-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-sub);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.mode-btn.active {
+  background: #ffffff;
+  color: var(--deep-blue);
+  box-shadow: 0 4px 14px rgba(45, 81, 160, 0.22);
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr;
+  gap: 18px;
+}
+
+.visual-panel,
+.explain-panel {
+  background: var(--panel);
+  border: 1px solid #dce7fd;
+  border-radius: 18px;
+}
+
+.visual-panel {
+  padding: 12px;
+}
+
+#bridgeCanvas {
+  width: 100%;
+  height: min(74vh, 760px);
+  background: linear-gradient(180deg, #ffffff 0%, #f2f6ff 58%, #ebf0fb 100%);
+  border-radius: 14px;
+}
+
+.river-bed {
+  fill: #c6d4f0;
+  opacity: 0.65;
+}
+
+.abutment {
+  fill: #8f9fbe;
+}
+
+.small-arch {
+  fill: none;
+  stroke: #7ca0de;
+  stroke-width: 15;
+  stroke-linecap: round;
+}
+
+.beam-body {
+  fill: #7f94b8;
+  opacity: 0.62;
+}
+
+.beam-deflect {
+  fill: none;
+  stroke: #ff6b6b;
+  stroke-width: 5;
+  stroke-dasharray: 9 6;
+}
+
+.load-dot {
+  fill: #ffcf9b;
+  stroke: #ff8f46;
+  stroke-width: 2;
+}
+
+.load-dot.focus {
+  animation: pulse 1.7s infinite;
+}
+
+.force-path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 8 14;
+  opacity: 0;
+}
+
+.force-path.active {
+  opacity: 1;
+  animation: flow 1.7s linear infinite;
+}
+
+.beam-force {
+  stroke: var(--accent);
+  stroke-width: 5;
+  opacity: 0;
+}
+
+.beam-force.active {
+  opacity: 1;
+}
+
+.diagram-label {
+  fill: #35517d;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.diagram-label.subtle {
+  font-size: 20px;
+  fill: #6b7da3;
+}
+
+.diagram-label.small {
+  font-size: 16px;
+}
+
+.explain-panel {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.action-btn {
+  border: 1px solid #cdd9f3;
+  background: #f7f9ff;
+  color: #29406f;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(45, 81, 160, 0.12);
+}
+
+.action-btn.primary {
+  background: linear-gradient(120deg, #3568d4, #2f58aa);
+  color: #fff;
+  border-color: transparent;
+}
+
+.action-btn.accent {
+  background: linear-gradient(120deg, #ffbe82, #ffa15f);
+  color: #4a2d14;
+  border-color: transparent;
+}
+
+.explanation {
+  padding: 14px;
+  border-radius: 14px;
+  background: #f4f8ff;
+  border: 1px solid #d8e5ff;
+}
+
+.explanation h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+#explanationTitle {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #23457f;
+}
+
+#explanationText {
+  margin: 0;
+  line-height: 1.62;
+  font-size: 15px;
+  color: #324e7c;
+}
+
+.legend {
+  padding: 12px;
+  border: 1px solid #dce7fd;
+  border-radius: 12px;
+}
+
+.legend h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.legend ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  color: #506184;
+}
+
+.swatch {
+  display: inline-block;
+  width: 22px;
+  height: 8px;
+  border-radius: 999px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.swatch.orange { background: var(--accent); }
+.swatch.blue { background: var(--deep-blue); }
+.swatch.slate { background: #8f9fbe; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 26, 58, 0.44);
+  display: grid;
+  place-items: center;
+  z-index: 100;
+}
+
+.modal-card {
+  width: min(640px, 90vw);
+  background: #fff;
+  border: 1px solid #d9e6ff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 22px 45px rgba(19, 45, 97, 0.24);
+}
+
+.modal-card h3 {
+  margin-top: 0;
+  color: #21447f;
+}
+
+.modal-points {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.modal-points article {
+  background: #f3f7ff;
+  border: 1px solid #dbe6ff;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.modal-points h4 {
+  margin: 0 0 6px;
+  color: #2c4f93;
+}
+
+.modal-points p {
+  margin: 0;
+  color: #3f5888;
+  line-height: 1.55;
+}
+
+.hidden {
+  display: none;
+}
+
+.highlight-abutment {
+  animation: pulseAbutment 0.95s ease 3;
+}
+
+@keyframes flow {
+  from {
+    stroke-dashoffset: 40;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes pulseAbutment {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.34); }
+}
+
+@media (max-width: 1200px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #bridgeCanvas {
+    height: 60vh;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
